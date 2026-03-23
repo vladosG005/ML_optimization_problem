@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: copy files via ftp
-        uses: SamKirkland/FTP-Deploy-Action@4.3.6
+      - name: ftp-deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           ftp-server: ftp://f1176550.xsph.ru
           ftp-username: f1176550
