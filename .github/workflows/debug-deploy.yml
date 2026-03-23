@@ -17,4 +17,5 @@ jobs:
           server-dir: ./domains/f1176550.xsph.ru/public_html/ml_optimizer/debug/
           exclude: |
             .git*
+            .git*/**
             README.md
