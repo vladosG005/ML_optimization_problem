@@ -11,7 +11,7 @@ jobs:
       - name: ftp-deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
-          ftp-server: ftp://f1176550.xsph.ru
-          ftp-username: f1176550
-          ftp-password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./domains/f1176550.xsph.ru/public_html/ml_optimizer
+          server: ftp://f1176550.xsph.ru
+          username: f1176550
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ./domains/f1176550.xsph.ru/public_html/ml_optimizer
