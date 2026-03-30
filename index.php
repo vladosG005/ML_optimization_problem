@@ -109,7 +109,7 @@ $methods = [
 </head>
 <body>
 
-<h1>Оптимизатор инференса ML-модели!ZZZMAX</h1>
+<h1>Оптимизатор инференса ML-модели!</h1>
 
 <?php if ($uploadError): ?>
     <div class="error"><?= htmlspecialchars($uploadError) ?></div>
