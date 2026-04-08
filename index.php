@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!is_dir(__DIR__ . '/uploads')) {
                 mkdir(__DIR__ . '/uploads', 0755, true);
             }
-            $targetFile = __DIR__ . '/uploads/' . uniqid() . '.jpg';
+            $targetFile = __DIR__ . '/uploads/' . uniqid() . '.pickle';
             if (move_uploaded_file($f['tmp_name'], $targetFile)) {
                 // Файл сохранён, инференс не производится
             } else {
@@ -109,7 +109,7 @@ $methods = [
 </head>
 <body>
 
-<h1>Оптимизатор инференса ML-модели!</h1>
+<h1>Оптимизатор инференса ML-модели</h1>
 
 <?php if ($uploadError): ?>
     <div class="error"><?= htmlspecialchars($uploadError) ?></div>
@@ -118,7 +118,7 @@ $methods = [
 <form enctype="multipart/form-data" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
     <p>
         <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
-        <input type="file" name="fupload" accept="image/*"><br>
+        <input type="file" name="fupload" accept=".pickle, .json"><br>
         <button type="submit">Загрузить</button>
     </p>
 </form>
