@@ -76,9 +76,9 @@ $methods = [
             <?php foreach ($methods as $method): ?>
             <tr>
                 <td><?= htmlspecialchars($method) ?></td>
-                <td class="empty-value"></td>
-                <td class="empty-value"></td>
-                <td class="empty-value"></td>
+                <td class="value">0</td>
+                <td class="value">0</td>
+                <td class="value">0</td>
             </tr>
             <?php endforeach; ?>
         </tbody>

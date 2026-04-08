@@ -45,9 +45,9 @@ td:first-child {
     font-weight: bold;
 }
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #e0e0e0;
 }
-.empty-value {
+.value {
     color: #999;
     font-style: italic;
     text-align: center;
