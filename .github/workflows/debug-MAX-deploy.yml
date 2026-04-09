@@ -19,3 +19,4 @@ jobs:
             **/.git*
             **/.git*/**
             README.md
+            backlog.md
