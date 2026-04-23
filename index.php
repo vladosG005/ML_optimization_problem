@@ -82,9 +82,9 @@ $methods = [
                     switch ($method):
                         case 'Исходная модель (Python)':
                 ?>
-                    <td class="value"><?= shell_exec('python ./python_benchmark/get_time.py') ?></td>
-                    <td class="value"><?= shell_exec('python ./python_benchmark/get_memory.py') ?></td>
-                    <td class="value"><?= shell_exec('python ./python_benchmark/get_accuracy.py') ?></td>
+                    <td class="value"><?= shell_exec("python ./python_benchmark/get_time.py {$targetFile}") ?></td>
+                    <td class="value"><?= shell_exec("python ./python_benchmark/get_memory.py {$targetFile}") ?></td>
+                    <td class="value"><?= shell_exec("python ./python_benchmark/get_accuracy.py {$targetFile}") ?></td>
                 <?
                     break;
                     default:

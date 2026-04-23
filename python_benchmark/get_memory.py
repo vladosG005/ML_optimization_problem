@@ -1,3 +1,4 @@
+import sys
 def get_memory():
-    return 3
+    return sys.argv[1]
 print(get_memory())
