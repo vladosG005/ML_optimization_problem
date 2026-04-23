@@ -85,7 +85,10 @@ $methods = [
                     <td class="value"><?= shell_exec('python ./python_benchmark/get_time.py') ?></td>
                     <td class="value"><?= shell_exec('python ./python_benchmark/get_memory.py') ?></td>
                     <td class="value"><?= shell_exec('python ./python_benchmark/get_accuracy.py') ?></td>
-                <? default: ?>
+                <?
+                    break;
+                    default:
+                ?>
                     <td class="value">0</td>
                     <td class="value">0</td>
                     <td class="value">0</td>
