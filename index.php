@@ -13,13 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!is_dir(__DIR__ . '/uploads')) {
                 mkdir(__DIR__ . '/uploads', 0755, true);
             }
-            $targetFile = __DIR__ . '/uploads/' . uniqid() . '.pickle';
+            $targetFile = __DIR__ . '/uploads/' . uniqid() . '.pkl';
             if (move_uploaded_file($f['tmp_name'], $targetFile)) {
                 // Файл сохранён, инференс не производится
-            } else {
+            }
+            else {
                 $uploadError = 'Не удалось переместить файл.';
             }
-        } else {
+        }
+        else {
             $uploadError = 'Ошибка загрузки файла (код: ' . $f['error'] . ').';
         }
     }
@@ -55,8 +57,8 @@ $methods = [
 
 <form enctype="multipart/form-data" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
     <p>
-        <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
-        <input type="file" name="fupload" accept=".pickle, .json"><br>
+        <input type="hidden" name="MAX_FILE_SIZE" value="104857600">
+        <input type="file" name="fupload" accept=".pkl"><br>
         <button type="submit">Загрузить</button>
     </p>
 </form>
@@ -76,10 +78,19 @@ $methods = [
             <?php foreach ($methods as $method): ?>
             <tr>
                 <td><?= htmlspecialchars($method) ?></td>
-                <td class="value"><?= shell_exec('python ./python_benchmark/get_time.py') ?></td>
-                <td class="value"><?= shell_exec('python ./python_benchmark/get_memory.py') ?></td>
-                <td class="value"><?= shell_exec('python ./python_benchmark/get_accuracy.py') ?></td>
+                <?php
+                    switch ($method):
+                        case 'Исходная модель (Python)':
+                ?>
+                    <td class="value"><?= shell_exec('python ./python_benchmark/get_time.py') ?></td>
+                    <td class="value"><?= shell_exec('python ./python_benchmark/get_memory.py') ?></td>
+                    <td class="value"><?= shell_exec('python ./python_benchmark/get_accuracy.py') ?></td>
+                <? default:
+                    <td class="value">0</td>
+                    <td class="value">0</td>
+                    <td class="value">0</td>
             </tr>
+                <? endswitch; ?>
             <?php endforeach; ?>
         </tbody>
     </table>
