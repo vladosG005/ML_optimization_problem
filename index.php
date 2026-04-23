@@ -76,9 +76,9 @@ $methods = [
             <?php foreach ($methods as $method): ?>
             <tr>
                 <td><?= htmlspecialchars($method) ?></td>
-                <td class="value">0</td>
-                <td class="value">0</td>
-                <td class="value">0</td>
+                <td class="value"><?= shell_exec('python ./python_benchmark/get_time.py') ?></td>
+                <td class="value"><?= shell_exec('python ./python_benchmark/get_memory.py') ?></td>
+                <td class="value"><?= shell_exec('python ./python_benchmark/get_accuracy.py') ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
