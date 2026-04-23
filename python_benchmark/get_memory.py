@@ -1,4 +1,6 @@
-import sys
-def get_memory():
-    return sys.argv[1]
-print(get_memory())
+from sys import argv
+import pickle
+filename = argv[1]
+with open(filename, 'rb') as file:
+    model = pickle.load(file)
+    print(typeof(model))
