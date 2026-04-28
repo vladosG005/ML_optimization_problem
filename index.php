@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 mkdir(__DIR__ . '/uploads', 0755, true);
             }
             $targetDataset = __DIR__ . '/uploads/' . uniqid() . '.csv';
-            if (!move_uploaded_file($f['tmp_name'], $targetDataset)) {
+            if (!move_uploaded_file($dataset['tmp_name'], $targetDataset)) {
                 $uploadError = 'Не удалось переместить файл с датасетом.';
             }
         }
@@ -69,10 +69,10 @@ $methods = [
 
 <form enctype="multipart/form-data" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
     <p>
-        <label for="model_upload">Выберите файл с моделью:</label>
+        <label for="model_upload">ML-модель:</label>
         <input type="hidden" name="MAX_FILE_SIZE" value="104857600">
         <input type="file" name="model_upload" accept=".pkl"><br>
-        <label for="model_upload">Выберите файл с датасетом:</label>
+        <label for="model_upload">Датасет:</label>
         <input type="hidden" name="MAX_FILE_SIZE" value="104857600">
         <input type="file" name="dataset_upload" accept=".csv"><br>
         <button type="submit">Загрузить</button>
@@ -98,9 +98,9 @@ $methods = [
                     switch ($method):
                         case 'Исходная модель (Python)':
                 ?>
-                    <td class="value"><?= shell_exec("python ./python_benchmark/get_time.py {$targetFile}") ?></td>
-                    <td class="value"><?= shell_exec("python ./python_benchmark/get_memory.py {$targetFile}") ?></td>
-                    <td class="value"><?= shell_exec("python ./python_benchmark/get_accuracy.py {$targetFile}") ?></td>
+                    <td class="value"><?= shell_exec("python ./python_benchmark/get_time.py {$targetModel} {$targetDataset}") ?></td>
+                    <td class="value"><?= shell_exec("python ./python_benchmark/get_memory.py {$targetModel} {$targetDataset}") ?></td>
+                    <td class="value"><?= shell_exec("python ./python_benchmark/get_accuracy.py {$targetModel} {$targetDataset}") ?></td>
                 <?
                     break;
                     default:
