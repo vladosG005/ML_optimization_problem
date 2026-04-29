@@ -98,9 +98,9 @@ $methods = [
                     switch ($method):
                         case 'Исходная модель (Python)':
                 ?>
-                    <td class="value"><?= shell_exec("python -W ignore ./python_benchmark/get_time.py {$targetModel} {$targetDataset}") ?></td>
-                    <td class="value"><?= shell_exec("python -W ignore ./python_benchmark/get_memory.py {$targetModel} {$targetDataset}") ?></td>
-                    <td class="value"><?= shell_exec("python -W ignore ./python_benchmark/get_accuracy.py {$targetModel} {$targetDataset}") ?></td>
+                    <td class="value"><?={$targetModel} {$targetDataset}?><?= shell_exec("python -W ignore ./python_benchmark/get_time.py {$targetModel} {$targetDataset}") ?></td>
+                    <td class="value">2<?= shell_exec("python -W ignore ./python_benchmark/get_memory.py {$targetModel} {$targetDataset}") ?></td>
+                    <td class="value">3<?= shell_exec("python -W ignore ./python_benchmark/get_accuracy.py {$targetModel} {$targetDataset}") ?></td>
                 <?
                     break;
                     default:
