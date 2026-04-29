@@ -1,10 +1,13 @@
+import os
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
 import pickle
 import pandas as pd
 import numpy as np
 def load_model(model_file, dataset_file):
     with open(model_file, 'rb') as f:
         model = pickle.load(f)
-        pd.read_csv(dataset_file)
+        df = pd.read_csv(dataset_file)
         features = model.get_booster().feature_names
         X = []
         Y = []
