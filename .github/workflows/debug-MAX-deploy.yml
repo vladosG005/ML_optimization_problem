@@ -20,4 +20,3 @@ jobs:
             **/.git*/**
             README.md
             backlog.md
-            ml_optimizer.pptx
