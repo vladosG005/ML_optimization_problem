@@ -95,7 +95,7 @@ $methods = [
             <tr>
                 <td><?= htmlspecialchars($method) ?></td>
                 <?php
-                    switch ($method):
+                    switch (htmlspecialchars($method)):
                         case 'Исходная модель (Python)':
                 ?>
                     <td class="value"><?={$targetModel} {$targetDataset}?><?= shell_exec("python -W ignore ./python_benchmark/get_time.py {$targetModel} {$targetDataset}") ?></td>
