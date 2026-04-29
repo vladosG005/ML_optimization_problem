@@ -2,4 +2,4 @@ from sys import argv
 from load_model import load_model
 from sklearn.metrics import accuracy_score
 X, Y, model = load_model(argv[1], argv[2])
-print(round(accuracy_score(Y, model.predict(X), normalize=False), 2))
+print(round(100 * accuracy_score(Y, model.predict(X)), 2))
