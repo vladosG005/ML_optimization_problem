@@ -1,6 +1,3 @@
 from sys import argv
-import pickle
-filename = argv[1]
-with open(filename, 'rb') as file:
-    model = pickle.load(file)
-    print(type(model))
+from load_model import load_model
+X, Y, model = load_model(argv[1], argv[2])
