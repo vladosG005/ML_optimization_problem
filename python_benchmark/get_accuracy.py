@@ -1,8 +1,5 @@
 from sys import argv
-import pickle
-import pandas as pd
-model_file = argv[1]
-dataset_file = argv[2]
-with open(model_file, 'rb') as f:
-    model = pickle.load(f)
-    pd.read_csv(dataset_file)
+from load_model import load_model
+from sklearn.metrics import accuracy_score
+X, Y, model = load_model(argv[1], argv[2])
+print(accuracy_score(Y, model.predict(X)))
