@@ -14,4 +14,4 @@ jobs:
           huggingface_repo_id: vladosG005/ML_optimization_problem
           hf_token: ${{ secrets.HF_TOKEN }}
           space_sdk: docker
-          exclude: "*.pptx"
+          subdirectory: 'app'
