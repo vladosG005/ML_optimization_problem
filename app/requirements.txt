@@ -1,2 +1,6 @@
 streamlit
 onnxruntime
+tempfile
+subprocess
+os
+pandas
