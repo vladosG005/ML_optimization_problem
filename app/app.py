@@ -27,7 +27,7 @@ if st.button("Загрузить и выполнить сравнение"):
     if model_file is None or dataset_file is None:
         st.error("Пожалуйста, загрузите и модель (.pkl), и датасет (.csv).")
     else:
-        # Сохраняем загруженные файлы во временные файлы
+        # Сохраняем загруженные файлы в создаваемые временные файлы
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pkl") as tmp_model:
             tmp_model.write(model_file.getbuffer())
             tmp_model_path = tmp_model.name
@@ -45,7 +45,7 @@ if st.button("Загрузить и выполнить сравнение"):
                         # Получение времени (мс)
                         time_val = python_benchmark.get_time(tmp_model_path, tmp_dataset_path)
                     except Exception:
-                        #time_val = None
+                        time_val = None
                     try:
                         # Получение памяти (МБ)
                         mem_val = python_benchmark.get_memory(tmp_model_path, tmp_dataset_path)
