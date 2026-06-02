@@ -1,3 +1,8 @@
 streamlit
 onnxruntime
 pandas
+joblib
+numpy
+xgboost
+resource
+scikit-learn
