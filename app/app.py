@@ -5,6 +5,8 @@ import pandas as pd
 import joblib
 import sklearn
 import python_benchmark
+import python_benchmark_pytorch as pt_bench
+import torch
 
 def load_model(model_file, dataset_file):
     with open(model_file, 'rb') as f:
@@ -22,7 +24,7 @@ def load_model(model_file, dataset_file):
             if hasattr(model, 'n_features_in_'):
                 feature_count = model.n_features_in_
             elif hasattr(model, 'n_features_'):
-                feature_count = model.n_features_in_
+                feature_count = model.n_features_
             X = pd.DataFrame()
             Y = pd.DataFrame()
             target_names = ('target', 'label', 'class', 'y', 'outcome')
@@ -51,6 +53,7 @@ def load_model(model_file, dataset_file):
                         if X.columns.shape[0] == feature_count:
                             break
         return (X.values, Y, model)
+
 # Список способов переноса/оптимизации модели (как в оригинале)
 methods = (
     "Исходная модель (Python)",
@@ -87,6 +90,8 @@ if st.button("Загрузить и выполнить сравнение"):
         try:
             X, Y, model = load_model(tmp_model_path, tmp_dataset_path)
             for method in methods:
+                time_val, mem_val, acc_val = None, None, None
+
                 if method == "Исходная модель (Python)":
                     # Вызов внешних скриптов
                     try:
@@ -104,6 +109,26 @@ if st.button("Загрузить и выполнить сравнение"):
                         acc_val = python_benchmark.get_accuracy(X, Y, model)
                     except Exception:
                         acc_val = None
+                
+                elif method == "PyTorch (TorchScript)":
+                    try: 
+                        time_val = pt_bench.get_time(X, model)
+                    except: 
+                        time_val = None
+                    try: 
+                        mem_val = pt_bench.get_memory(X, model)
+                    except: 
+                        mem_val = None
+                    try:
+                        acc_val = pt_bench.get_accuracy(X, Y, model)
+                    except Exception as e:
+                        import traceback
+                        st.error(f"❌ Ошибка в {method}: {type(e).__name__}")
+                        st.code(traceback.format_exc(), language="text")
+                        acc_val = None
+                    finally:
+                        pt_bench.clear_cache()  # Освобождаем память перед следующим методом
+                
                 else:
                     time_val = 0.0
                     mem_val = 0.0
