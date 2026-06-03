@@ -123,7 +123,7 @@ if st.button("Загрузить и выполнить сравнение"):
                         acc_val = pt_bench.get_accuracy(X, Y, model)
                     except Exception as e:
                         import traceback
-                        st.error(f"❌ Ошибка в {method}: {type(e).__name__}")
+                        st.error(f"Ошибка в {method}: {type(e).__name__}")
                         st.code(traceback.format_exc(), language="text")
                         acc_val = None
                     finally:
