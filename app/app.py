@@ -2,55 +2,10 @@ import os
 import streamlit as st
 import tempfile
 import pandas as pd
-import joblib
-import sklearn
+from load_model import load_model
 import python_benchmark
+import pytorch_benchmark as pt_bench
 
-def load_model(model_file, dataset_file):
-    with open(model_file, 'rb') as f:
-        model = joblib.load(f)
-        df = pd.read_csv(dataset_file)
-        if hasattr(model, 'feature_names_in_'):
-            features = model.feature_names_in_
-            X = df[features]
-            for col in df.columns:
-                if col not in features:
-                    Y = df[col]
-                    if sklearn.metrics.accuracy_score(Y, model.predict(X)) > 0.5:
-                        break
-        else:
-            if hasattr(model, 'n_features_in_'):
-                feature_count = model.n_features_in_
-            elif hasattr(model, 'n_features_'):
-                feature_count = model.n_features_in_
-            X = pd.DataFrame()
-            Y = pd.DataFrame()
-            target_names = ('target', 'label', 'class', 'y', 'outcome')
-            cardinality_threshold = 20
-            for col in df.columns:
-                if col.lower() in target_names:
-                    Y = df[col]
-                elif X.columns.shape[0] < feature_count:
-                    X = df.drop(columns=[col])
-                    break
-            if Y.empty:
-                for col in df.columns:
-                    if df[col].dtype in ('object', 'int64', 'bool'):
-                        unique_count = df[col].nunique()
-                        if unique_count <= cardinality_threshold and unique_count > 1:
-                            Y = df[col]
-                            cardinality_threshold = unique_count
-                if Y.empty:
-                    X = df.iloc[:, :-1]
-                    Y = df.iloc[:, -1]
-                elif Y.name in X.columns:
-                    X = pd.DataFrame()
-                    for col in df.columns:
-                        if col != Y.name:
-                            X[col] = df[col]
-                        if X.columns.shape[0] == feature_count:
-                            break
-        return (X.values, Y, model)
 # Список способов переноса/оптимизации модели (как в оригинале)
 methods = (
     "Исходная модель (Python)",
@@ -87,6 +42,8 @@ if st.button("Загрузить и выполнить сравнение"):
         try:
             X, Y, model = load_model(tmp_model_path, tmp_dataset_path)
             for method in methods:
+                time_val, mem_val, acc_val = None, None, None
+
                 if method == "Исходная модель (Python)":
                     # Вызов внешних скриптов
                     try:
@@ -104,6 +61,26 @@ if st.button("Загрузить и выполнить сравнение"):
                         acc_val = python_benchmark.get_accuracy(X, Y, model)
                     except Exception:
                         acc_val = None
+                
+                elif method == "PyTorch (TorchScript)":
+                    try: 
+                        time_val = pt_bench.get_time(X, model)
+                    except: 
+                        time_val = None
+                    try: 
+                        mem_val = pt_bench.get_memory(X, model)
+                    except: 
+                        mem_val = None
+                    try:
+                        acc_val = pt_bench.get_accuracy(X, Y, model)
+                    except Exception as e:
+                        import traceback
+                        st.error(f"Ошибка в {method}: {type(e).__name__}")
+                        st.code(traceback.format_exc(), language="text")
+                        acc_val = None
+                    finally:
+                        pt_bench.clear_cache()  # Освобождаем память перед следующим методом
+                
                 else:
                     time_val = 0.0
                     mem_val = 0.0
