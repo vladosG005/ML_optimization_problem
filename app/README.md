@@ -9,4 +9,4 @@ tags:
 pinned: false
 ---
 
-# ML_optimization_problem 1
+# ML_optimization_problem
