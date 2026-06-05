@@ -6,3 +6,5 @@ numpy
 xgboost
 resource
 scikit-learn
+hummingbird-ml
+torch

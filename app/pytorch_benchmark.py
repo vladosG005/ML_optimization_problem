@@ -44,7 +44,7 @@ def get_time(X, model):
         _ = torch_model(X_tensor)
     end = time.perf_counter_ns()
     
-    return round((end - start) / 1_000_000, 2)
+    return (end - start) / 1_000_000
 
 def get_memory(X, model):
     """Измеряет пиковую RSS-память процесса после инференса."""
