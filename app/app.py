@@ -4,6 +4,7 @@ import tempfile
 import pandas as pd
 from load_model import load_model
 import python_benchmark
+import onnx_benchmark
 import pytorch_benchmark as pt_bench
 
 # Список способов переноса/оптимизации модели (как в оригинале)
@@ -80,7 +81,21 @@ if st.button("Загрузить и выполнить сравнение"):
                         acc_val = None
                     finally:
                         pt_bench.clear_cache()  # Освобождаем память перед следующим методом
-                
+                elif method == "ONNX Runtime":
+                    try: 
+                        time_val = onnx_benchmark.get_time(X, model)
+                    except: 
+                        time_val = None
+                    try: 
+                        mem_val = onnx_benchmark.get_memory(X, model)
+                    except: 
+                        mem_val = None
+                    try:
+                        acc_val = onnx_benchmark.get_accuracy(X, Y, model)
+                    except Exception as e:
+                        acc_val = None
+                    finally:
+                        onnx_benchmark.clear_cache()
                 else:
                     time_val = 0.0
                     mem_val = 0.0

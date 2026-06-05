@@ -1,5 +1,7 @@
 streamlit
+onnx
 onnxruntime
+skl2onnx
 pandas
 joblib
 numpy
